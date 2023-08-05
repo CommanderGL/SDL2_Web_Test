@@ -19,6 +19,9 @@ build_prod:
 build_dev:
 	$(CC) $(SOURCE_DIR)/$(OBJS) -o $(OUT_DIR)/$(OBJ_NAME).html --shell-file $(SHELL_FILE_DEV) $(COMPILER_FLAGS)
 
+build_default_shell:
+	$(CC) $(SOURCE_DIR)/$(OBJS) -o $(OUT_DIR)/$(OBJ_NAME).html $(COMPILER_FLAGS)
+
 watch_prod:
 	$(NODE_PACKAGE_MANAGER) nodemon -w src/**/* -w $(SHELL_FILE_PROD) -e cpp,c,h,hpp,html -x "make build_prod || exit 0"
 
