@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
-        "emscripten"
+        "DPAD",
+        "electronjs",
+        "emscripten",
+        "fullscreenable"
     ],
     "files.associations": {
         "array": "cpp",

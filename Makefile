@@ -1,29 +1,23 @@
 SOURCE_DIR = src
 OUT_DIR = bin
 
-SHELL_FILE_PROD = shell_prod.html
-SHELL_FILE_DEV = shell_dev.html
+SHELL_FILE = shell.html
 
 OBJS = main.cpp
 OBJ_NAME = test
 
 CC = em++
 
-COMPILER_FLAGS = -g -lm --bind -s USE_SDL=2
+COMPILER_FLAGS = -g -lm --bind -s ALLOW_MEMORY_GROWTH -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS='["png"]' --preload-file assets/ --use-preload-plugins
+WATCH_FLAGS = -w src/**/* -w assets/**/* -w $(SHELL_FILE) -e cpp,c,h,hpp,html -x "make build || exit 0"
 
 NODE_PACKAGE_MANAGER = pnpm # For Watch Mode
 
-build_prod:
-	$(CC) $(SOURCE_DIR)/$(OBJS) -o $(OUT_DIR)/$(OBJ_NAME).html --shell-file $(SHELL_FILE_PROD) $(COMPILER_FLAGS)
-
-build_dev:
-	$(CC) $(SOURCE_DIR)/$(OBJS) -o $(OUT_DIR)/$(OBJ_NAME).html --shell-file $(SHELL_FILE_DEV) $(COMPILER_FLAGS)
+build:
+	$(CC) $(SOURCE_DIR)/$(OBJS) -o $(OUT_DIR)/$(OBJ_NAME).html --shell-file $(SHELL_FILE) $(COMPILER_FLAGS)
 
 build_default_shell:
 	$(CC) $(SOURCE_DIR)/$(OBJS) -o $(OUT_DIR)/$(OBJ_NAME).html $(COMPILER_FLAGS)
 
-watch_prod:
-	$(NODE_PACKAGE_MANAGER) nodemon -w src/**/* -w $(SHELL_FILE_PROD) -e cpp,c,h,hpp,html -x "make build_prod || exit 0"
-
-watch_dev:
-	$(NODE_PACKAGE_MANAGER) nodemon -w src/**/* -w $(SHELL_FILE_DEV) -e cpp,c,h,hpp,html -x "make build_dev || exit 0"
+watch:
+	$(NODE_PACKAGE_MANAGER) nodemon $(WATCH_FLAGS)
